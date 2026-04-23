@@ -69,12 +69,44 @@ const get_user_data = async (mail, pwd) => {
     pool.query(statement, [mail, pwd], (err, res) => {
       if (err) reject(err);
 
-      console.log(`${res[0].username} - ${res[0].mail}`)
+      console.log(`${res[0].username} - ${res[0].mail}`);
 
-      resolve({ "username": res[0].username, "mail": res[0].mail });
+      resolve({ username: res[0].username, mail: res[0].mail });
     });
   });
 };
+
+const add_element = async (request, values) => {
+  return new Promise((resolve, reject) => {
+    pool.query(request, values, (err, res) => {
+      if(err) reject(err);
+
+      resolve(true)
+    })
+  });
+};
+
+const check_exists = async (request, values) => {
+  return new Promise((resolve, reject) => {
+    pool.query(request, values, (err, res, fields) => {
+      if(err) reject(err);
+
+      console.log(err)
+
+      resolve(res[0].nb > 0)
+    })
+  });
+}
+
+const select = async (request, values) => {
+  return new Promise( (resolve, reject) => {
+    pool.query(request, values, (err, res, fields) => {
+      if(err) reject(err);
+
+      resolve(res)
+    })
+  })
+}
 
 module.exports = {
   pool,
@@ -83,4 +115,7 @@ module.exports = {
   create_user,
   can_connect,
   get_user_data,
+  add_element,
+  check_exists,
+  select
 };

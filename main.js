@@ -13,10 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 const ROUTEPATH = "./routes"
 const authRoutes = require(`${ROUTEPATH}/auth`)
+const simRoutes = require(`${ROUTEPATH}/simulation`)
 
 app.use("/auth/", authRoutes)
-
+app.use("/simulation/", simRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
